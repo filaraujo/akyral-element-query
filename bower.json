@@ -1,0 +1,34 @@
+{
+  "name": "akyral-layout",
+  "version": "0.1.1",
+  "authors": [
+    "Filipe Araujo <filipe.alves.araujo@gmail.com>"
+  ],
+  "description": "A utility element that implements element queries to its parent node.",
+  "keywords": [
+    "akyral",
+    "element-query",
+    "element-queries",
+    "media-query",
+    "media-queries",
+    "polymer",
+    "responsive",
+    "web-components"
+  ],
+  "main": "akyral-element-query.html",
+  "license": "MIT",
+  "homepage": "https://github.com/filaraujo/akyral-element-query/",
+  "ignore": [
+    "**/.*",
+    "**/*.scss",
+    "node_modules",
+    "bower_components",
+    "../",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "polymer": "Polymer/polymer#~0.3.5",
+    "polymer-test-tools": "Polymer/polymer-test-tools#~0.3.5"
+  }
+}

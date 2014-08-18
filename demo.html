@@ -1,0 +1,139 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+
+    <script src="../platform/platform.js"></script>
+    <link rel="import" href="../akyral-element-query/akyral-element-query.html">
+
+</head>
+
+<body unresolved>
+
+    <polymer-element name="demo-element" attributes="media">
+        <template>
+            <style media="screen">
+                :host {
+                    float: left;
+                    transition: width .8s, background .8s;
+                    background: #e74c3c;
+                    color: #fff;
+                    font-family: Arial;
+                    position: relative;
+                    min-height: 100px;
+                    padding: 10px;
+                    margin-bottom: 10px;
+                    min-width: 320px;
+                }
+                span {
+                    background: #fff;
+                    float: left;
+                    height: 100px;
+                    width: 100px;
+                    margin-right: 10px;
+                    margin-bottom: 10px;
+                }
+                p {
+                    margin: 5px;
+                }
+                div {
+                    clear: both;
+                    margin-top: 10px;
+                    padding: 10px;
+                }
+                :host([media='(min-width:481px) and (max-width:720px)']) {
+                    background: #2980b9;
+                }
+                :host([media='(min-width:721px) and (max-width:944px)']) {
+                    overflow: auto;
+                    background: #27ae60;
+                    font-size: 20px;
+                }
+                :host([media='(min-width:721px) and (max-width:944px)']) span {
+                    height: 150px;
+                    width: 150px;
+                }
+                :host([media='(min-width:721px) and (max-width:944px)']) div,
+                :host([media="(min-width:945px) and (max-width:1264px)"]) div {
+                    clear: none;
+                }
+                :host([media="(min-width:945px) and (max-width:1264px)"]) {
+                    background: #8e44ad;
+                    font-size: 20px;
+                    overflow: auto;
+                }
+                :host([media="(min-width:945px) and (max-width:1264px)"]) span {
+                    height: 150px;
+                    width: 150px;
+                }
+                :host([media="(min-width:320px) and (max-width:480px)"]) {
+                    background: #e67e22;
+                    font-size: 11px;
+                }
+                :host([media="(min-width:320px) and (max-width:480px)"]) span {
+                    float: right;
+                    height: 75px;
+                    margin: 0 0 10px 10px;
+                    width: 75px;
+                }
+            </style>
+
+            <akyral-element-query id="eq" queries='["(min-width:721px) and (max-width:944px)","(min-width:945px) and (max-width:1264px)"]' media="{{media}}"></akyral-element-query>
+            <span></span>
+            <p>Commodo deserunt sunt adipisicing veniam Lorem aute eiusmod labore velit cupidatat laboris mollit. Labore quis culpa dolor quis excepteur amet ipsum voluptate incididunt cillum quis tempor. Dolor incididunt consequat ex aute proident reprehenderit
+                do laboris id occaecat duis dolore. Sunt duis elit et esse mollit.</p>
+            <div>blah blah blah</div>
+
+        </template>
+        <script>
+            Polymer('demo-element', {
+                publish: {
+                    media: {
+                        reflect: true
+                    },
+
+                    ready: function() {
+                        this.$.eq.addEventListener('element-query-change', function(e) {
+                            console.log('element query fired with value: ', e.detail.media);
+                        });
+                    }
+
+                }
+            });
+        </script>
+    </polymer-element>
+
+    <p>An example of using <code>&lt;akyral-element-query></code>:</p>
+
+    <demo-element></demo-element>
+
+
+    <script>
+        (function() {
+            var demos = document.querySelectorAll('demo-element');
+
+            function randomWidth() {
+                var r = Math.floor(Math.random() * window.innerWidth);
+
+                if (r <= 320) {
+                    return randomWidth();
+                }
+                return r;
+            }
+
+            function randomizeDemo() {
+                [].forEach.call(demos, function(demo) {
+                    demo.style.width = randomWidth() + 'px';
+                });
+            }
+
+            randomizeDemo();
+            setInterval(randomizeDemo, 4000);
+
+        }());
+    </script>
+
+</body>
+
+</html>
