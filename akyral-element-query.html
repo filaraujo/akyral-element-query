@@ -39,24 +39,24 @@ Fired when an element query changes, also fired on element load. Passes the
 <polymer-element name="akyral-element-query">
 
     <template>
-        <style media="screen">
+        <style>
             :host {
-                display: block;
-            }
-
-            object {
                 bottom: 0;
                 display: block;
                 left: 0;
+                overflow: hidden;
                 position: absolute;
                 right: 0;
                 top: 0;
+                z-index: -1;
+            }
+            object {
                 width: 100%;
                 height: 100%;
             }
         </style>
         <template if="[[queries]]">
-            <object id="obj" data="about:blank" type="text/html" on-load="[[loaded]]"></object>
+            <object id="obj" type="text/html" on-load="{{loaded}}"></object>
         </template>
     </template>
     <script>
@@ -168,6 +168,24 @@ Fired when an element query changes, also fired on element load. Passes the
                     this.job('attribute', function() {
                         this.media = viewport;
                     }, 150);
+                },
+
+                /**
+                 * The <polymer-element> has been fully prepared (e.g. Shadow DOM
+                 * created, property observers setup, event listeners attached, etc).
+                 *
+                 * @method ready
+                 */
+                ready: function(){
+                    /*
+                     * IE doesn't handle object tag with data attribute well
+                     * needs to be defined after the fact
+                     */
+                    var _this = this;
+                    this.async(function(){
+                        this.$.obj.data = 'about:blank';
+                    }, 100);
+
                 }
             });
 
