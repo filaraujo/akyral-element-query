@@ -76,8 +76,6 @@ Fired when an element query changes, also fired on element load. Passes the
              * @private
              */
             function buildDOM() {
-                "use strict";
-
                 var nodes = [],
                     styles = [].concat(baseStyles);
 
@@ -86,7 +84,7 @@ Fired when an element query changes, also fired on element load. Passes the
 
                 this.queries.forEach(function(v, index) {
                     nodes.push('<div query="' + v + '"></div>');
-                    styles.push('@media ' + v + ' { [query="' + v + '"] { opacity: 1; }}')
+                    styles.push('@media ' + v + ' { [query="' + v + '"] { opacity: 1; }}');
                 });
 
                 return {
@@ -116,8 +114,8 @@ Fired when an element query changes, also fired on element load. Passes the
                      * `queries` attribute defines the media queries to test against.
                      *
                      * @attribute queries
-                     * @type string
-                     * @default null
+                     * @type array or string
+                     * @default []
                      */
                     queries: {
                         value: []
@@ -171,7 +169,7 @@ Fired when an element query changes, also fired on element load. Passes the
                 },
 
                 /**
-                 * The <polymer-element> has been fully prepared (e.g. Shadow DOM
+                 * The `<polymer-element>` has been fully prepared (e.g. Shadow DOM
                  * created, property observers setup, event listeners attached, etc).
                  *
                  * @method ready
