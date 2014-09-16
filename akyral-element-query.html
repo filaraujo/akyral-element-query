@@ -104,10 +104,11 @@ Fired when an element query changes, also fired on element load. Passes the
                      *
                      * @attribute media
                      * @type string
-                     * @default null
+                     * @default undefined
                      */
                     media: {
-                        reflect: true
+                        reflect: true,
+                        value: undefined
                     },
 
                     /**
@@ -117,9 +118,7 @@ Fired when an element query changes, also fired on element load. Passes the
                      * @type array or string
                      * @default []
                      */
-                    queries: {
-                        value: []
-                    }
+                    queries: []
                 },
 
                 /**
@@ -179,7 +178,6 @@ Fired when an element query changes, also fired on element load. Passes the
                      * IE doesn't handle object tag with data attribute well
                      * needs to be defined after the fact
                      */
-                    var _this = this;
                     this.async(function(){
                         this.$.obj.data = 'about:blank';
                     }, 100);
