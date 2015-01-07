@@ -124,22 +124,22 @@ Fired when an element query changes, also fired on element load. Passes the
                 },
 
                 /**
-                * The `author` attribute defines the initial author, setting
-                * this value will add another author
-                *
-                * @attribute author
-                * @type string
-                * @default 'Filipe Araujo'
-                */
+                 * The `author` attribute defines the initial author, setting
+                 * this value will add another author
+                 *
+                 * @attribute author
+                 * @type string
+                 * @default 'Filipe Araujo'
+                 */
                 set author(name){
-                    if(authors.indexOf(name) > 0){
-                        return;
-                    }
-                    authors.push(name);
+                  if(authors.indexOf(name) > 0){
+                    return;
+                  }
+                  authors = [].concat.apply(authors, [name]);
                 },
 
                 get author(){
-                    return authors;
+                  return authors;
                 },
 
                 /**
