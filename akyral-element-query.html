@@ -20,12 +20,10 @@ in the queries attribute)
                 '(min-width:945px) and (max-width:1264px)']">
     </akyral-element-query>
 
-
 @element akyral-element-query
 @blurb Element that implements element queries to its parent node.
-@status alpha
+@demo http://filaraujo.github.io/akyral.io/element-query/index.html
 @homepage https://github.com/filaraujo/akyral-element-query
-@demo demo
 -->
 
 <!--
@@ -38,174 +36,174 @@ Fired when an element query changes, also fired on element load. Passes the
 
 <polymer-element name="akyral-element-query">
 
-    <template>
-        <style>
-            :host {
-                bottom: 0;
-                display: block;
-                left: 0;
-                overflow: hidden;
-                position: absolute;
-                right: 0;
-                top: 0;
-                z-index: -1;
-            }
-            object {
-                width: 100%;
-                height: 100%;
-            }
-        </style>
-        <template if="[[queries]]">
-            <object id="obj" type="text/html" on-load="{{loaded}}"></object>
-        </template>
+  <template>
+    <style>
+      : host {
+        bottom: 0;
+        display: block;
+        left: 0;
+        overflow: hidden;
+        position: absolute;
+        right: 0;
+        top: 0;
+        z-index: -1;
+      }
+      object {
+        width: 100%;
+        height: 100%;
+      }
+    </style>
+    <template if="[[queries]]">
+      <object id="obj" type="text/html" on-load="{{loaded}}"></object>
     </template>
-    <script>
-        (function() {
+  </template>
+  <script>
+    (function() {
 
-            var baseStyles = [,
-                    'html, body  { margin: 0; padding: 0 }',
-                    'div { transition: opacity 0.01s; opacity: 0;}'
-                ],
+      var baseStyles = [,
+        'html, body  { margin: 0; padding: 0 }',
+        'div { transition: opacity 0.01s; opacity: 0;}'
+      ],
 
-                authors = ['Filipe Araujo'];
+        authors = ['Filipe Araujo'];
 
-            /**
-             * The `buildDOM` method contructs the media query nodes and styles to
-             * test against.
-             *
-             * @method buildDOM
-             * @returns object
-             * @private
-             */
-            function buildDOM() {
-                var nodes = [],
-                    styles = [].concat(baseStyles);
+      /**
+       * The `buildDOM` method contructs the media query nodes and styles to
+       * test against.
+       *
+       * @method buildDOM
+       * @returns object
+       * @private
+       */
+      function buildDOM() {
+        var nodes = [],
+          styles = [].concat(baseStyles);
 
-                // convert to array
-                this.queries = [].concat.apply([], [this.queries]);
+        // convert to array
+        this.queries = [].concat.apply([], [this.queries]);
 
-                this.queries.forEach(function(v, index) {
-                    nodes.push('<div query="' + v + '"></div>');
-                    styles.push('@media ' + v + ' { [query="' + v + '"] { opacity: 1; }}');
-                });
+        this.queries.forEach(function(v, index) {
+          nodes.push('<div query="' + v + '"></div>');
+          styles.push('@media ' + v + ' { [query="' + v + '"] { opacity: 1; }}');
+        });
 
-                return {
-                    styles: styles,
-                    nodes: nodes
-                };
-            }
+        return {
+          styles: styles,
+          nodes: nodes
+        };
+      }
 
-            // define polymer component
-            Polymer('akyral-element-query', {
+      // define polymer component
+      Polymer('akyral-element-query', {
 
-                publish: {
+        publish: {
 
-                    /**
-                     * `media` attribute is set by the element when a query changes.
-                     * This attribute is reflected.
-                     *
-                     * @attribute media
-                     * @type string
-                     * @default undefined
-                     */
-                    media: {
-                        reflect: true,
-                        value: undefined
-                    },
+          /**
+           * `media` attribute is set by the element when a query changes.
+           * This attribute is reflected.
+           *
+           * @attribute media
+           * @type string
+           * @default undefined
+           */
+          media: {
+            reflect: true,
+            value: undefined
+          },
 
-                    /**
-                     * `queries` attribute defines the media queries to test against.
-                     *
-                     * @attribute queries
-                     * @type array or string
-                     * @default []
-                     */
-                    queries: []
-                },
+          /**
+           * `queries` attribute defines the media queries to test against.
+           *
+           * @attribute queries
+           * @type array or string
+           * @default []
+           */
+          queries: []
+        },
 
-                /**
-                 * The `author` attribute defines the initial author, setting
-                 * this value will add another author
-                 *
-                 * @attribute author
-                 * @type string
-                 * @default 'Filipe Araujo'
-                 */
-                set author(name){
-                  if(authors.indexOf(name) > 0){
-                    return;
-                  }
-                  authors = [].concat.apply(authors, [name]);
-                },
+        /**
+         * The `author` attribute defines the initial author, setting
+         * this value will add another author
+         *
+         * @attribute author
+         * @type string
+         * @default 'Filipe Araujo'
+         */
+        set author(name) {
+          if (authors.indexOf(name) > 0) {
+            return;
+          }
+          authors = [].concat.apply(authors, [name]);
+        },
 
-                get author(){
-                  return authors;
-                },
+        get author() {
+          return authors;
+        },
 
-                /**
-                 * The `loaded` method handles object dom creation. This method will
-                 * inject the styles and node into the document as well as bind the
-                 * handlers.
-                 *
-                 * @method loaded
-                 */
-                loaded: function(e) {
-                    var doc = this.$.obj.contentDocument,
-                        dom = buildDOM.bind(this)(),
-                        style = doc.createElement('style');
+        /**
+         * The `loaded` method handles object dom creation. This method will
+         * inject the styles and node into the document as well as bind the
+         * handlers.
+         *
+         * @method loaded
+         */
+        loaded: function(e) {
+          var doc = this.$.obj.contentDocument,
+            dom = buildDOM.bind(this)(),
+            style = doc.createElement('style');
 
-                    style.innerHTML = dom.styles.join('');
+          style.innerHTML = dom.styles.join('');
 
-                    doc.head.appendChild(style);
-                    doc.body.innerHTML = dom.nodes.join('');
+          doc.head.appendChild(style);
+          doc.body.innerHTML = dom.nodes.join('');
 
-                    doc.addEventListener('transitionend', this.update.bind(this));
-                    this.async(this.update);
-                },
+          doc.addEventListener('transitionend', this.update.bind(this));
+          this.async(this.update);
+        },
 
-                /**
-                 * The `update` method will set the media attribute and fire the
-                 * `element-query-change` event.
-                 *
-                 * @method update
-                 */
-                update: function(e) {
-                    var objWindow = this.$.obj.contentDocument.defaultView.window,
-                        viewport = this.queries.filter(function(view) {
-                            return objWindow.matchMedia(view).matches;
-                        });
-
-                    viewport = viewport[0] || '';
-
-                    this.job('event', function() {
-                        this.fire('element-query-change', {
-                            media: viewport
-                        });
-                    }, 250);
-
-                    this.job('attribute', function() {
-                        this.media = viewport;
-                    }, 150);
-                },
-
-                /**
-                 * The `<polymer-element>` has been fully prepared (e.g. Shadow DOM
-                 * created, property observers setup, event listeners attached, etc).
-                 *
-                 * @method ready
-                 */
-                ready: function(){
-                    /*
-                     * IE doesn't handle object tag with data attribute well
-                     * needs to be defined after the fact
-                     */
-                    this.async(function(){
-                        this.$.obj.data = 'about:blank';
-                    }, 100);
-
-                }
+        /**
+         * The `update` method will set the media attribute and fire the
+         * `element-query-change` event.
+         *
+         * @method update
+         */
+        update: function(e) {
+          var objWindow = this.$.obj.contentDocument.defaultView.window,
+            viewport = this.queries.filter(function(view) {
+              return objWindow.matchMedia(view).matches;
             });
 
-        }());
-    </script>
+          viewport = viewport[0] || '';
+
+          this.job('event', function() {
+            this.fire('element-query-change', {
+              media: viewport
+            });
+          }, 250);
+
+          this.job('attribute', function() {
+            this.media = viewport;
+          }, 150);
+        },
+
+        /**
+         * The `<polymer-element>` has been fully prepared (e.g. Shadow DOM
+         * created, property observers setup, event listeners attached, etc).
+         *
+         * @method ready
+         */
+        ready: function() {
+          /*
+           * IE doesn't handle object tag with data attribute well
+           * needs to be defined after the fact
+           */
+          this.async(function() {
+            this.$.obj.data = 'about:blank';
+          }, 100);
+
+        }
+      });
+
+    }());
+  </script>
 </polymer-element>
